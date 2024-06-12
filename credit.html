@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <script>const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+readline.question('Enter the credit card number: ', (x) => {
+  const digit = 0;
+  let sum = 0;
+  let y = parseInt(x);
+
+  while (y !== 0) {
+    let sumeven = 0, sumodd = 0;
+    const rem = y % 10;
+    digit++;
+    if (digit % 2 === 0) { // if digit is even
+      let multiply = rem * 2;
+      if (multiply === 0) {
+        sumeven += multiply;
+      } else {
+        while (multiply !== 0) { // adding all digits after
+          sumeven += multiply % 10;
+          multiply = Math.floor(multiply / 10); // minus last digit of multiply
+        }
+      }
+    } else { // if digit is odd
+      sumodd += rem;
+    }
+    y = Math.floor(y / 10); // minus last digit from y
+
+    sum += sumeven + sumodd;
+  }
+
+  // check for valid credit card
+  if (digit !== 13 && digit !== 15 && digit !== 16) { // for first if
+    console.log('INVALID');
+  } else if (sum % 10 === 0) {
+    if (digit === 16) { // if digit is 16
+      if (Math.floor(parseInt(x) / 100000000000000) >= 51 && Math.floor(parseInt(x) / 100000000000000) <= 55) {
+        console.log('MASTERCARD');
+      } else if (Math.floor(parseInt(x) / 1000000000000000) === 4) {
+        console.log('VISA');
+      } else { // if digit is not 16
+        console.log('INVALID');
+      }
+    } else if (digit === 15) {
+      if (Math.floor(parseInt(x) / 10000000000000) === 34 || Math.floor(parseInt(x) / 10000000000000) === 37) {
+        console.log('AMEX');
+      } else {
+        console.log('INVALID');
+      }
+    } else if (digit === 13) {
+      if (Math.floor(parseInt(x) / 1000000000000) === 4) {
+        console.log('VISA');
+      } else {
+        console.log('INVALID');
+      }
+    } else {
+      console.log('INVALID');
+    }
+  } else {
+    console.log('INVALID');
+  }
+
+  readline.close();
+});
+</script>
+  </head>
+  <body>
+    
+  </body>
+</html>
